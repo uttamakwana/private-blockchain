@@ -1,4 +1,4 @@
-import { GENESIS_BLOCK } from "./genesis.js";
+import { GENESIS_BLOCK, MINE_RATE } from "./genesis.js";
 import { cryptoHash } from "./crypto-hash.js";
 
 export default class Block {
@@ -11,19 +11,25 @@ export default class Block {
     this.difficulty = difficulty;
   }
 
+  // creates genesis block
   static genesis() {
     return new this(GENESIS_BLOCK);
   }
 
+  // To mine block
   static mineBlock({ prevBlock, data }) {
     // const timestamp = Date.now();
     let hash, timestamp;
-    const { difficulty } = prevBlock;
     const prevHash = prevBlock.hash;
+    let { difficulty } = prevBlock;
     let nonce = 0;
     do {
       nonce++;
       timestamp = Date.now();
+      difficulty = Block.adjustDifficulty({
+        originalBlock: prevBlock,
+        timestamp,
+      });
       hash = cryptoHash(timestamp, prevHash, data, nonce, difficulty);
     } while (hash.substring(0, difficulty) !== "0".repeat(difficulty));
     return new this({
@@ -35,6 +41,19 @@ export default class Block {
       nonce,
       difficulty,
     });
+  }
+
+  // to adjust difficulty
+  static adjustDifficulty({ originalBlock, timestamp }) {
+    const { difficulty } = originalBlock;
+
+    const difference = timestamp - originalBlock.timestamp;
+    if (difficulty < 1) return 1;
+    if (difference > MINE_RATE) {
+      return difficulty - 1;
+    } else {
+      return difficulty + 1;
+    }
   }
 }
 

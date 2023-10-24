@@ -1,7 +1,7 @@
 import Block from "./block.js";
 import { cryptoHash } from "./crypto-hash.js";
 
-class BlockChain {
+export default class BlockChain {
   constructor() {
     this.chain = [Block.genesis()];
   }
@@ -57,9 +57,9 @@ class BlockChain {
 const blockChain = new BlockChain();
 
 blockChain.addBlock({ data: { name: "Uttam", email: "test@example.com" } });
-blockChain.addBlock({
-  data: { name: "Divyesh", email: "Divyesh@example.com" },
-});
+// blockChain.addBlock({
+//   data: { name: "Divyesh", email: "Divyesh@example.com" },
+// });
 // blockChain.addBlock({
 //   data: { name: "Aashutosh", email: "Aashutosh@example.com" },
 // });
