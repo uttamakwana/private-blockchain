@@ -65,5 +65,5 @@ blockChain.addBlock({ data: { name: "Uttam", email: "test@example.com" } });
 //   data: { name: "Aaditya", email: "Aaditya@example.com" },
 // });
 
-console.log(BlockChain.isValidChain(blockChain.chain));
-console.log(blockChain);
+// console.log(BlockChain.isValidChain(blockChain.chain));
+// console.log(blockChain);
