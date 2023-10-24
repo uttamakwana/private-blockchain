@@ -1,5 +1,6 @@
 import { GENESIS_BLOCK, MINE_RATE } from "./genesis.js";
 import { cryptoHash } from "./crypto-hash.js";
+import hexToBinary from "hex-to-binary";
 
 export default class Block {
   constructor({ timestamp, data, prevHash, hash, nonce, difficulty }) {
@@ -31,7 +32,9 @@ export default class Block {
         timestamp,
       });
       hash = cryptoHash(timestamp, prevHash, data, nonce, difficulty);
-    } while (hash.substring(0, difficulty) !== "0".repeat(difficulty));
+    } while (
+      hexToBinary(hash).substring(0, difficulty) !== "0".repeat(difficulty)
+    );
     return new this({
       timestamp,
       prevHash,

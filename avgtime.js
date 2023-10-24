@@ -1,6 +1,7 @@
 import BlockChain from "./blockchain.js";
 
 const blockChain = new BlockChain();
+console.log(blockChain.chain[0])
 blockChain.addBlock({ data: "New Data" });
 let prevTimestamp, nextTimestamp, nextBlock, timeDiff, averageTime;
 const times = [];
